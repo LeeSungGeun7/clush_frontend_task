@@ -6,7 +6,7 @@
 개발 환경
 node.js v18.19.0
 
-nvm use 18.19.0 적용 해주세요~!
+nvm use 18.19.0 또는 그 이상 버전 적용 해주세요~!
 
 설치 및 실행
 
@@ -24,8 +24,7 @@ npm run build
 
 ## 실행
 
-npm run preview
-기본 http://localhost:4173/musinsa 로 접속
+
 
 ##
 **구성 및 선정 이유**
@@ -36,13 +35,13 @@ TypeScript : 자바스크립트에서 정적 타입 분석을 위해 사용
 
 React-Router-Dom : 페이지 이동이 가능한 라이브러리 
 
+JSON-server : 가상 서버로 Restful 한 통신을 보여주기 위해서 사용
+
 ESLint: Standard Style: 통일된 코딩 스타일과 코드 품질을 유지하기 위해 사용
 
 Styled-Components: CSS-in-JS 라이브러리로 전역스타일링 및 컴포넌트 기반의 편의성으로 채택했습니다.
 
 Axios: JSON 형식의 응답 데이터를 자동으로 처리하며, fetch보다 능동적인 기능 제공으로 인해 선정했습니다.
-
-JSON 형식의 응답 데이터를 자동으로 처리하며, fetch보다 능동적인 기능 제공으로 인해 선정했습니다.
 
 Ant-design 5.20.5 : 사용자 친화적이고 빠른 UI 구성 
 
