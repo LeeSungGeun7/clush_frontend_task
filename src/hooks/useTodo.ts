@@ -1,13 +1,14 @@
 import { useCallback, useState } from "react";
 import axios  from 'axios'
 import { Todo } from "../types/TodoType";
-
+import { useRecoilState} from 'recoil'
+import { TodoListState } from "../atom/atom";
 
 
 
 
 export const useTodo = () => {
-    const [todolist , setTodoList] = useState<Todo[]>([])
+    const [todolist, setTodoList] = useRecoilState(TodoListState);
     const local = 'http://localhost:3737'
 
     // 공통적으로 서버에 요청을 보내고 응답이 유효하면 즉시 화면 업데이트
@@ -17,10 +18,10 @@ export const useTodo = () => {
 
         const res = await axios.post(`${local}/todos`, todo)
         try {
-            if ( res.status === 200 ) {
+            if ( res.status === 200 || res.status === 201 ) {
                 setTodoList([...todolist , res.data])
             } else {
-                throw new Error ('투두 생성이 실패했습니다.')    
+                throw new Error (`${res.status},투두 생성이 실패했습니다.`)    
             }
         } catch (error) {
             console.log( ('투두 생성중에 문제가 발생했습니다.'),error)
@@ -29,7 +30,7 @@ export const useTodo = () => {
     }
 
     // 선택된 투두아이템 삭제 
-    async function deleteSelectedTodo(id:number) {
+    async function deleteSelectedTodo(id:number | string) {
         
         try {
             const res = await axios.delete(`${local}/todos/${id}`)
