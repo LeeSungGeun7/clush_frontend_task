@@ -51,7 +51,6 @@ git clone https://github.com/LeeSungGeun7/clush_frontend_task.git
 cd clush_frontend_task
 ```
 
-
 3. json 서버 실행
 npm install json-server --save-dev
 npx json-server --watch db.json --port 3737
@@ -62,12 +61,17 @@ npm install
 6. 개발 환경 실행
 npm run start
 
-7. 정적 빌드 npm run build
+------------------------
+빌드 방법 
 
-8. npm install -g serve
+npm run build
 
-9. serve -s build
+npm install -g serve
+
+serve -s build
 
 
 주력으로 사용한 컴포넌트
+
+투두폼 , 투두아이템 , useTodo 훅 , antd Modal 
 
