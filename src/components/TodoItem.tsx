@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { Todo } from '../types/TodoType'
 import styled from 'styled-components'
-import { Checkbox } from "antd";
+import { Checkbox, Modal , Input } from "antd";
 import { CloseCircleOutlined , EditOutlined} from '@ant-design/icons'
 import { useTodo } from '../hooks/useTodo';
 
@@ -40,12 +40,24 @@ const TodoContainer = styled.div<any>`
 
 
 
-function TodoItem({title,created_at,tag,updated_at,id,isDone}:Todo) {
+function TodoItem({title,created_at,tag,id,isDone}:Todo) {
     const { deleteSelectedTodo , setTodoList , todolist , changeSelectedTodo  } = useTodo();
-    
+    const [isEdit , setIsEdit] = useState(false)
+    const [todoItem , setTodoItem] = useState<Todo>({
+        id : id , 
+        title : title , 
+        created_at ,
+        tag , 
+        isDone 
+    })
+
     const onChangeHandler = () => {
         const updatedTodo = { id, title, isDone: !isDone, created_at };
         changeSelectedTodo(id, updatedTodo); // 변경된 값을 직접 전달
+    }; 
+
+     const onChangeHandle = (title:string) => {
+        setTodoItem({...todoItem ,id : id , title: title})
     };
 
   return (
@@ -55,12 +67,36 @@ function TodoItem({title,created_at,tag,updated_at,id,isDone}:Todo) {
         </Checkbox>
         
         <div className='right'>
-        <EditOutlined />
+        <EditOutlined onClick={()=>{setIsEdit(true);
+        setTodoItem({
+            id : id , 
+            title : title , 
+            created_at ,
+            tag , 
+            isDone 
+        })}} />
         <CloseCircleOutlined onClick={()=>{
             deleteSelectedTodo(id);
             console.log(id,todolist)
         }}/>
         </div>
+
+        <Modal 
+        onCancel={()=>{setIsEdit(false)}} 
+        onClose={()=>{setIsEdit(false)}} 
+        onOk={()=>{changeSelectedTodo(id, todoItem);setTodoItem(todoItem);setIsEdit(false)}} 
+        okText="변경하기" 
+        cancelText="취소" 
+        centered={true} 
+        width={300} 
+        style={{height:'auto' }} 
+        open={isEdit}>
+            <div>
+            <span>title</span>
+            <Input value={todoItem.title} onChange={(e)=>{onChangeHandle(e.target.value)}} style={{width:'70%',margin:"0.7rem"}}/>
+            </div>
+            
+        </Modal>
         
     </TodoContainer>
   )
