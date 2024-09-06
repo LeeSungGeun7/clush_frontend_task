@@ -36,8 +36,37 @@ CRA: 개발 시간을 단축하기 위해 선택했습니다.
 
 
 
-소스 빌드 및 실행 방법 메뉴얼
+## 설치 및 실행 방법
 
+### 1. 환경 설정
+- **Node.js**: v18.19.0
+- **NPM**: v9.0.0 이상
+
+### 2. 프로젝트 클론
+먼저 깃허브 레포지토리를 로컬 환경에 클론합니다.
+
+```bash
+git clone https://github.com/LeeSungGeun7/clush_frontend_task.git
+cd clush_frontend_task
+```
+
+
+3. json 서버 실행
+npm install json-server --save-dev
+npx json-server --watch db.json --port 3737
+
+5. 의존성 패키지 설치
+npm install
+
+6. 개발 환경 실행
+npm run start
+
+7. 정적 빌드 npm run build
+
+8. npm install -g serve
+
+
+9. serve -s build
 
 
 주력으로 사용한 컴포넌트
