@@ -1,5 +1,5 @@
 export interface Todo {
-    id : number ; 
+    id :  number | string; 
     title : string ;
     created_at : Date | string ;
     updated_at? : Date | string; 
