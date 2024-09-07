@@ -1,13 +1,9 @@
-import React from 'react';
-import { Navigate, BrowserRouter as Router ,Route , Routes } from "react-router-dom";
+import { BrowserRouter as Router ,Route , Routes } from "react-router-dom";
 import TodoItem from './components/TodoItem';
 import MainPage from './pages/MainPage';
 import {
   RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
+
 } from 'recoil'
 
 
