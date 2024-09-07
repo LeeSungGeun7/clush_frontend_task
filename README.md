@@ -1,13 +1,20 @@
 
 ### **클러쉬 프론트엔드 과제 프로젝트**
+---
 
+**TODO-TASK** 
 
-### **소개**
 간단한 투두리스트를 기능하는 앱입니다. 
 
-구현된 기능으로는 투두리스트 생성/수정/삭제 입니다 
 
-날짜를 기준으로 조회를 할 수 있습니다.
+---
+구현기능 
+* 투두리스트 생성 
+* 투두리스트 수정 
+* 투두리스트 삭제 
+* 투두리스트 날짜별 조회
+
+---
 
 리액트의 SPA의 특징을 활용하여 사용자 친화적이고 반응형웹에 신경썼습니다. 
 
@@ -39,14 +46,13 @@ CRA: 개발 시간을 단축하기 위해 선택했습니다.
 
 
 
-
 ## 설치 및 실행 방법
 
-### 1. 환경 설정
-- **Node.js**: v18.19.0
-- **NPM**: v9.0.0 이상
+ 1. 환경 설정
+- **Node.js**: v18.19.0 (nvm use 18.19.0)
+- **NPM**: v10.3.0 
 
-### 2. 프로젝트 클론
+2. 프로젝트 클론
 먼저 깃허브 레포지토리를 로컬 환경에 클론합니다.
 
 ```bash
@@ -54,27 +60,61 @@ git clone https://github.com/LeeSungGeun7/clush_frontend_task.git
 cd clush_frontend_task
 ```
 
-3. json 서버 실행
+4. json 서버 실행
+
+
+```
 npm install json-server --save-dev
 npx json-server --watch db.json --port 3737
+```
+
 
 5. 의존성 패키지 설치
-npm install
 
-6. 개발 환경 실행
+
+```
+npm install
+```
+
+
+6. 로컬 환경 실행
+
+```
 npm run start
+```
+http://localhost:3000 로 접속
 
 ------------------------
-빌드 방법 
+**빌드 실행 방법**
 
+
+```
 npm run build
 
 npm install -g serve
 
 serve -s build
+```
+
+http://172.30.1.78:3000 로 접속
+
+---
+
+### 주력으로 사용한 컴포넌트
+
+--- 
+
+TodoForm.tsx
+
+스타일을 레이아웃을  헤더 , 바디 , 푸터별로 분리하여
+
+스타일 유지보수 측면에서 신경을 썼습니다. 
+
+ㅇ
 
 
-주력으로 사용한 컴포넌트
 
-투두폼 , 투두아이템 , useTodo 훅 , antd Modal 
 
+
+UI 참고사이트 
+- https://blog.naver.com/iceirony/221182098102
