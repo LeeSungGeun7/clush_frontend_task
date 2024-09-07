@@ -9,7 +9,7 @@ const HeaderStyle = styled.header`
     width : 100vw;
     height: 70px;
     background-color: #f1efef;
-    @media (max-width: 450px) {
+    @media (max-width: 550px) {
         display:none;
     }
 `
