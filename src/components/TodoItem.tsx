@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect,  useState } from 'react'
 import { Todo } from '../types/TodoType'
 import { Checkbox, Modal , Input } from "antd";
 import { CloseCircleOutlined , EditOutlined} from '@ant-design/icons'
@@ -9,7 +9,7 @@ import { TodoContainer } from '../styles/todoItem';
 // 완료/수정/삭제 기능을 포함
 
 function TodoItem({title,created_at,tag,id,isDone}:Todo) {
-    const { deleteSelectedTodo , setTodoList , todolist , changeSelectedTodo  } = useTodo();
+    const { deleteSelectedTodo , todolist , changeSelectedTodo  } = useTodo();
     const [isEdit , setIsEdit] = useState(false)
     const [todoItem , setTodoItem] = useState<Todo>({
         id : id , 
@@ -19,18 +19,19 @@ function TodoItem({title,created_at,tag,id,isDone}:Todo) {
         isDone 
     })
 
-    const onChangeHandler = () => {
+    const onChangeCheckBox = () => {
         const updatedTodo = { id, title, isDone: !isDone, created_at };
         changeSelectedTodo(id, updatedTodo); // 변경된 객체 전달
     }; 
 
-     const onChangeHandle = (title:string) => {
+
+    const OnChange = (title:string) => {
         setTodoItem({...todoItem ,id : id , title: title})
-    };
+    }
 
   return (
     <TodoContainer key={id} isdone={isDone+""}>
-        <Checkbox checked={isDone} onChange={()=>{onChangeHandler();}} >
+        <Checkbox checked={isDone} onChange={()=>{onChangeCheckBox();}} >
             <span>{title}</span>
         </Checkbox>
         
@@ -64,7 +65,7 @@ function TodoItem({title,created_at,tag,id,isDone}:Todo) {
                 <span>Modify Todo</span>
                 <Input 
                 value={todoItem.title}
-                onChange={(e)=>{onChangeHandle(e.target.value)}} 
+                onChange={(e)=>{OnChange(e.target.value)}} 
                 style={{width:'70%',margin:"0.7rem"}}/>
             </div>
             

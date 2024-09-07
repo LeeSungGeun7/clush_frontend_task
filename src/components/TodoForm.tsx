@@ -50,7 +50,7 @@ function TodoForm() {
     }
 
     const onChangeHandler = (title:string) => {
-        setTodoItem({...todoItem ,id : Math.random()+"" , title : title , tag : '' })
+        setTodoItem({...todoItem ,id : Math.random()+"" , title : title , tag : '',  created_at:`${todayYear}-${todayMonth}-${todayDate}` })
     }
 
 
@@ -69,6 +69,7 @@ function TodoForm() {
     // 날짜가 변경되면 데이터 페칭
     useEffect(()=>{
         getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[now])
 
 
