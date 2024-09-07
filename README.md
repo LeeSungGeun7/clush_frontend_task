@@ -82,21 +82,18 @@
 git clone https://github.com/LeeSungGeun7/clush_frontend_task.git
 cd clush_frontend_task
 ```
-
-3. json 서버 실행
-
-
-```
-npm install json-server --save-dev
-npx json-server --watch db.json --port 3737
-```
-
-
-4. 의존성 패키지 설치
+3. 의존성 패키지 설치
 
 
 ```
 npm install
+```
+
+4. json 서버 실행
+
+
+```
+npx json-server --watch db.json --port 3737
 ```
 
 
