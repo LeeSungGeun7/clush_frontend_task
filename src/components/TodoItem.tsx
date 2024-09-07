@@ -1,4 +1,4 @@
-import { useEffect,  useState } from 'react'
+import {  useState } from 'react'
 import { Todo } from '../types/TodoType'
 import { Checkbox, Modal , Input } from "antd";
 import { CloseCircleOutlined , EditOutlined} from '@ant-design/icons'
