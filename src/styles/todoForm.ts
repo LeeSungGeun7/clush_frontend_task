@@ -2,8 +2,13 @@ import styled from 'styled-components'
 
 const TodoLayout = styled.div`
     display:flex;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    @media (min-width:500px) {
+        margin: 32px;
+        width: 70%;
+        height: 80%;
+    }
     flex-direction:column;
 
     .modal {
