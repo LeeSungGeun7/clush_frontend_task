@@ -1,44 +1,12 @@
-import React, { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { Todo } from '../types/TodoType'
-import styled from 'styled-components'
 import { Checkbox, Modal , Input } from "antd";
 import { CloseCircleOutlined , EditOutlined} from '@ant-design/icons'
 import { useTodo } from '../hooks/useTodo';
+import { TodoContainer } from '../styles/todoItem';
 
-// 재사용이 많이 되는 아이템 컴포넌트 
-// 카드 형식의 UI 
-// 투두리스트에서 생성/수정/삭제 기능을 포함
-
-const TodoContainer = styled.div<any>`
-    display:flex;
-    background-color: white;
-    margin:5px;
-    justify-content: space-between;
-    align-items:center;
-    width: 100%;
-    height: 100px;   
-
-    .right {
-        display : flex;
-
-        * {
-            margin:3px;
-
-            *:hover {
-                transition: 1s 'easy-in';
-                font-size:1.5rem;    
-            }
-
-        }
-    }
-
-    span {
-        text-decoration : ${(props)=>props.isdone.toString() === "true" ? 'line-through' : 'none' }
-    }
-    
-`
-
-
+// 투두아이템으로 생성된 컴포넌트 
+// 완료/수정/삭제 기능을 포함
 
 function TodoItem({title,created_at,tag,id,isDone}:Todo) {
     const { deleteSelectedTodo , setTodoList , todolist , changeSelectedTodo  } = useTodo();
@@ -53,7 +21,7 @@ function TodoItem({title,created_at,tag,id,isDone}:Todo) {
 
     const onChangeHandler = () => {
         const updatedTodo = { id, title, isDone: !isDone, created_at };
-        changeSelectedTodo(id, updatedTodo); // 변경된 값을 직접 전달
+        changeSelectedTodo(id, updatedTodo); // 변경된 객체 전달
     }; 
 
      const onChangeHandle = (title:string) => {
@@ -91,9 +59,13 @@ function TodoItem({title,created_at,tag,id,isDone}:Todo) {
         width={300} 
         style={{height:'auto' }} 
         open={isEdit}>
+
             <div>
-            <span>title</span>
-            <Input value={todoItem.title} onChange={(e)=>{onChangeHandle(e.target.value)}} style={{width:'70%',margin:"0.7rem"}}/>
+                <span>Modify Todo</span>
+                <Input 
+                value={todoItem.title}
+                onChange={(e)=>{onChangeHandle(e.target.value)}} 
+                style={{width:'70%',margin:"0.7rem"}}/>
             </div>
             
         </Modal>
