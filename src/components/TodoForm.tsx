@@ -1,12 +1,12 @@
-import React, { useEffect, useRef,  useState } from 'react'
+import  { useEffect, useRef,  useState } from 'react'
 import {LeftOutlined , RightOutlined,PlusCircleOutlined , SmileOutlined } from '@ant-design/icons'
 import axios from 'axios'
 import { Todo } from '../types/TodoType'
 import TodoItem from './TodoItem'
 import { useTodo } from '../hooks/useTodo'
 import { Modal , Input, InputRef } from 'antd';
-import { todayTime } from '../util/time'
 import { TodoBody , TodoFooter , TodoLayout , TodoHeader } from '../styles/todoForm'
+import { useTime } from '../hooks/useTime'
 
 
 // 날짜별 조회 기능추가 
@@ -18,25 +18,28 @@ import { TodoBody , TodoFooter , TodoLayout , TodoHeader } from '../styles/todoF
 
 
 function TodoForm() {
-    let { todayYear, dayOfWeek , todayMonth , todayDate} = todayTime();
     const inputRef = useRef<InputRef>(null)
-    const {todolist , setTodoList , createTodo} = useTodo();
-    const [date,setDate] = useState(`${todayYear}-${todayMonth}-${todayDate}`)
+    const {todolist , setTodoList , createTodo } = useTodo();
+    const { DayMinus , DayPlus , todayTime , now } = useTime();
+    let { todayYear, dayOfWeek , todayMonth , todayDate  } = todayTime();
     const [isModalOpen , setIsModalOpen] = useState(false)
     const [todoItem , setTodoItem] = useState<Todo>({
             id : '' , 
             title : "",
             isDone : false , 
-            created_at : ""
+            created_at : `${todayYear}-${todayMonth}-${todayDate}`
     })
+    
 
+    // 데이터 페칭 
     async function getData() {
-        const res = await axios.get('http://localhost:3737/todos')
+        const res = await axios.get(`http://localhost:3737/todos?created_at=${todayYear}-${todayMonth}-${todayDate}`)
         if (res.status === 200) {
             setTodoList(res.data)
         }
     }
 
+    // state 클리어 함수 
     const clearTodoItem = () => {
         setTodoItem({
             id : '' , 
@@ -50,6 +53,8 @@ function TodoForm() {
         setTodoItem({...todoItem ,id : Math.random()+"" , title : title , tag : '' })
     }
 
+
+    // 간단한 유효 검사 및 투두 생성 
     const addNewItem = () => {
         if ( todoItem.title.length < 1 ) {
             inputRef.current?.focus()
@@ -60,47 +65,43 @@ function TodoForm() {
         clearTodoItem();
     }
 
+
+    // 날짜가 변경되면 데이터 페칭
     useEffect(()=>{
         getData()
-        console.log(todolist)
-    },[])
+    },[now])
+
 
     
 
   return (
     <TodoLayout>
         <TodoHeader>
-            <LeftOutlined/>
-            <div>{`${dayOfWeek} , ${date}`}</div>
-            <RightOutlined/>
+            <LeftOutlined onClick={DayMinus}/>
+            <div>{`${dayOfWeek} , ${todayYear}-${todayMonth}-${todayDate}`}</div>
+            <RightOutlined onClick={DayPlus}/>
         </TodoHeader>
-
 
         <TodoBody todolist_len={todolist.length}>
 
-            { todolist.length === 0 && 
+            { todolist.length === 0 ?
             <div>
                 <p>투두리스트가 없어요.</p>
                 <p>오른쪽 하단에서 추가버튼을 눌러주세요 <SmileOutlined /></p>
             </div>
-            
+            :
+            todolist.map((item,idx)=>{
+                return(
+                    <TodoItem 
+                    key={idx}
+                    title={item.title} 
+                    created_at={item.created_at}
+                    isDone={item.isDone}
+                    id={item.id}
+                    />
+                )
+            })
             }
-            {
-                todolist.map((item,idx)=>{
-                    return(
-                        <TodoItem 
-                        key={idx}
-                        title={item.title} 
-                        // tag={item.tag} 
-                        created_at={item.created_at}
-                        isDone={item.isDone}
-                        id={item.id}
-                        />
-                    )
-                })
-            }                
-
-
         </TodoBody>
 
         <TodoFooter >
@@ -113,7 +114,6 @@ function TodoForm() {
             <span>Add New</span>
             <PlusCircleOutlined onClick={()=>{setIsModalOpen(!isModalOpen)}}/>
             </div>
-            
         </TodoFooter>
 
 
@@ -129,15 +129,15 @@ function TodoForm() {
         height={'30%'} 
         open={isModalOpen}>
             <div className='label_input'>
-            <span>TO_DO</span>
-
-            <Input 
-             placeholder='투두리스트를 적어주세요'
-             ref={inputRef}
-             value={todoItem.title}
-             onChange={(e)=>{onChangeHandler(e.target.value)}} style={{width:'80%',margin:"0.7rem"}}/>
+                <span>TO_DO</span>
+                <Input 
+                placeholder='투두리스트를 적어주세요'
+                ref={inputRef}
+                value={todoItem.title}
+                onChange={(e)=>{onChangeHandler(e.target.value)}} 
+                style={{width:'80%',margin:"0.7rem"}}
+                />
             </div>
-
         </Modal>
         
 
