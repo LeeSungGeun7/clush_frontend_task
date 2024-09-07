@@ -1,4 +1,3 @@
-import { useCallback, useState } from "react";
 import axios  from 'axios'
 import { Todo } from "../types/TodoType";
 import { useRecoilState} from 'recoil'
