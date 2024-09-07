@@ -1,40 +1,5 @@
 {
-    "todos": [
-      {
-        "id": "2",
-        "title": "test1",
-        "tag": "인강 열심히 들어보기!!",
-        "isDone": true
-      },
-      {
-        "id": "3",
-        "title": "시험",
-        "tag": "홍대입구역에서 3시까지",
-        "isDone": true
-      },
-      {
-        "id": "22",
-        "title": "공부",
-        "tag": "asdf",
-        "isDone": false
-      },
-      {
-        "id": "7272",
-        "title": "산책",
-        "tag": "fasdfasdf",
-        "isDone": false
-      },
-      {
-        "id": "986",
-        "title": "ㅇㅇㅇ",
-        "tag": "asdfsdfs",
-        "isDone": false
-      },
-      {
-        "id": "2675",
-        "title": "시청",
-        "tag": "asdfasdfasf",
-        "isDone": false
-      }
-    ]
-  }
+  "todos": [
+
+  ]
+}
