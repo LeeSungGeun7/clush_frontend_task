@@ -1,86 +1,27 @@
-import React, { InputHTMLAttributes, useEffect, useRef,  useState } from 'react'
-import styled from 'styled-components'
-import {LeftOutlined , RightOutlined,PlusCircleOutlined} from '@ant-design/icons'
+import React, { useEffect, useRef,  useState } from 'react'
+import {LeftOutlined , RightOutlined,PlusCircleOutlined , SmileOutlined } from '@ant-design/icons'
 import axios from 'axios'
 import { Todo } from '../types/TodoType'
 import TodoItem from './TodoItem'
 import { useTodo } from '../hooks/useTodo'
-import { Button, Modal , Input, InputRef } from 'antd';
+import { Modal , Input, InputRef } from 'antd';
 import { todayTime } from '../util/time'
+import { TodoBody , TodoFooter , TodoLayout , TodoHeader } from '../styles/todoForm'
 
 
-const TodoLayout = styled.div`
-    display:flex;
-    width: 100vw;
-    height: 100vh;
-    flex-direction:column;
+// 날짜별 조회 기능추가 
+// 1 . 날짜별로 조회하도록 서버에 yyyy-mm-dd 요청
+// 2 . date state 선언 
+// 3 . 아이템 추가 할때 created_at 을 date state 로 추가 
+// 4 . 왼쪽 , 오른쪽 버튼을 통해서 하루 간격 증가 또는 감소 기능 
+// 5 . 달력도 고려할수 있음 
 
-    .modal {
-        width: 200px;
-        height: 500px;
-    }
-    label {
-        gap : 1rem;
-    }
-
-    .label_input {
-        width: 100%;
-        display:flex;
-        gap : 10px;
-        margin : 10px;
-    }
-`
-
-const TodoHeader = styled.div`
-    display:flex;
-    width: 100%;
-    height: 5rem;
-    border : 0.5px solid silver;
-    background-color: white;
-    justify-content: space-evenly;
-    align-items:center;
-`
-
-const TodoBody = styled.div`
-    display:flex;
-    width: 100%;
-    padding: 32px; /* 원하는 padding 값 */
-    box-sizing: border-box; /* padding을 width에 포함시킴 */
-    flex : 1;
-    flex-direction:column;
-    background-color:white;
-    align-items:center;
-    overflow-y: scroll;
-`
-
-const TodoFooter = styled.div`
-    display:flex;
-    width: 100%;
-    height: 4rem;
-    border : 0.5px solid silver;
-    justify-content: space-between;
-    align-items:center;
-
-    * {
-        margin: 1rem;
-    }
-    span {
-        margin: 0px;
-    }
-    .task {
-        display:flex;
-
-        .success {
-            color : skyblue;
-        }
-    }
-`
 
 function TodoForm() {
-    // const [todoData, setTodoData] = useState<Todo[]>([])
+    let { todayYear, dayOfWeek , todayMonth , todayDate} = todayTime();
     const inputRef = useRef<InputRef>(null)
     const {todolist , setTodoList , createTodo} = useTodo();
-    const [isEdit , setIsEdit] = useState(false)
+    const [date,setDate] = useState(`${todayYear}-${todayMonth}-${todayDate}`)
     const [isModalOpen , setIsModalOpen] = useState(false)
     const [todoItem , setTodoItem] = useState<Todo>({
             id : '' , 
@@ -124,25 +65,33 @@ function TodoForm() {
         console.log(todolist)
     },[])
 
-    let { todayYear, dayOfWeek , todayMonth , todayDate} = todayTime();
+    
 
   return (
     <TodoLayout>
         <TodoHeader>
             <LeftOutlined/>
-            <div>{`${dayOfWeek} , ${todayYear} . ${todayMonth} . ${todayDate}`}</div>
+            <div>{`${dayOfWeek} , ${date}`}</div>
             <RightOutlined/>
         </TodoHeader>
 
 
-        <TodoBody>
+        <TodoBody todolist_len={todolist.length}>
+
+            { todolist.length === 0 && 
+            <div>
+                <p>투두리스트가 없어요.</p>
+                <p>오른쪽 하단에서 추가버튼을 눌러주세요 <SmileOutlined /></p>
+            </div>
+            
+            }
             {
                 todolist.map((item,idx)=>{
                     return(
                         <TodoItem 
                         key={idx}
                         title={item.title} 
-                        tag={item.tag} 
+                        // tag={item.tag} 
                         created_at={item.created_at}
                         isDone={item.isDone}
                         id={item.id}
@@ -154,7 +103,7 @@ function TodoForm() {
 
         </TodoBody>
 
-        <TodoFooter>
+        <TodoFooter >
             <div className='task'>
                 <p>{`${todolist.length} Task`}</p>
                 <p className='success'>{`sucess ${todolist.filter((e)=>e.isDone === true).length} Task`}</p>
@@ -180,17 +129,15 @@ function TodoForm() {
         height={'30%'} 
         open={isModalOpen}>
             <div className='label_input'>
-            <span>title</span>
+            <span>TO_DO</span>
 
-            <Input name='i' 
+            <Input 
+             placeholder='투두리스트를 적어주세요'
              ref={inputRef}
              value={todoItem.title}
              onChange={(e)=>{onChangeHandler(e.target.value)}} style={{width:'80%',margin:"0.7rem"}}/>
             </div>
-            {/* <div className='label_input'>
-            <span>태그</span>
-            <Input style={{width:'50%'}}/>
-            </div> */}
+
         </Modal>
         
 
