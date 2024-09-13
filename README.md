@@ -6,7 +6,7 @@
 
 간단한 투두리스트를 기능하는 앱입니다. 
 
-<a href="https://ibb.co/gS9kXtq"><img src="https://ibb.co/gS9kXtq" alt="image" border="0"></a>
+![title](https://i.ibb.co/1rQFpRy/image.gif)
 
 ---
 구현기능 
