@@ -6,6 +6,7 @@
 
 간단한 투두리스트를 기능하는 앱입니다. 
 
+![title](https://i.ibb.co/1rQFpRy/image.gif)
 
 ---
 구현기능 
@@ -19,7 +20,7 @@
 
 리액트의 SPA의 특징을 활용하여 
 
-사용자 친화적이 반응형웹을 적용했습니다.
+사용자 친화적인 반응형웹을 적용했습니다.
 
 ```
 폴더구조
@@ -82,21 +83,18 @@
 git clone https://github.com/LeeSungGeun7/clush_frontend_task.git
 cd clush_frontend_task
 ```
-
-3. json 서버 실행
-
-
-```
-npm install json-server --save-dev
-npx json-server --watch db.json --port 3737
-```
-
-
-4. 의존성 패키지 설치
+3. 의존성 패키지 설치
 
 
 ```
 npm install
+```
+
+4. json 서버 실행
+
+
+```
+npx json-server --watch db.json --port 3737
 ```
 
 
