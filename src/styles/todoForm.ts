@@ -27,7 +27,7 @@ const TodoLayout = styled.div`
     }
 `
 
-const TodoHeader = styled.div`
+const TodoHeaderST = styled.div`
     display:flex;
     width: 100%;
     height: 5rem;
@@ -37,7 +37,7 @@ const TodoHeader = styled.div`
     align-items:center;
 `
 
-const TodoBody = styled.div<any>`
+const TodoBodyST = styled.div<any>`
     display:flex;
     width: 100%;
     padding: 32px; /* 원하는 padding 값 */
@@ -51,7 +51,7 @@ const TodoBody = styled.div<any>`
     
 `
 
-const TodoFooter = styled.div`
+const TodoFooterST = styled.div`
     display:flex;
     width: 100%;
     height: 4rem;
@@ -77,7 +77,7 @@ const TodoFooter = styled.div`
 
 export { 
     TodoLayout,
-    TodoBody,
-    TodoHeader,
-    TodoFooter
+    TodoBodyST,
+    TodoHeaderST,
+    TodoFooterST
  }

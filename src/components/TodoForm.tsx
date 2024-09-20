@@ -1,26 +1,19 @@
 import  { useEffect, useRef,  useState } from 'react'
-import {LeftOutlined , RightOutlined,PlusCircleOutlined , SmileOutlined } from '@ant-design/icons'
 import axios from 'axios'
 import { Todo } from '../types/TodoType'
-import TodoItem from './TodoItem'
 import { useTodo } from '../hooks/useTodo'
 import { Modal , Input, InputRef } from 'antd';
-import { TodoBody , TodoFooter , TodoLayout , TodoHeader } from '../styles/todoForm'
+import { TodoLayout  } from '../styles/todoForm'
 import { useTime } from '../hooks/useTime'
+import TodoHeaders from './TodoForm/TodoHeader'
+import TodoBody from './TodoForm/TodoBody'
+import TodoFooter from './TodoForm/TodoFooter'
 
-
-// 날짜별 조회 기능추가 
-// 1 . 날짜별로 조회하도록 서버에 yyyy-mm-dd 요청
-// 2 . date state 선언 
-// 3 . 아이템 추가 할때 created_at 을 date state 로 추가 
-// 4 . 왼쪽 , 오른쪽 버튼을 통해서 하루 간격 증가 또는 감소 기능 
-// 5 . 달력도 고려할수 있음 
-
-
+// 리팩토링 가독성 있게 파일 분리 ?? 
 function TodoForm() {
     const inputRef = useRef<InputRef>(null)
     const {todolist , setTodoList , createTodo } = useTodo();
-    const { DayMinus , DayPlus , todayTime , now } = useTime();
+    const  { DayMinus , DayPlus , todayTime , now } = useTime();
     let { todayYear, dayOfWeek , todayMonth , todayDate  } = todayTime();
     const [isModalOpen , setIsModalOpen] = useState(false)
     const [todoItem , setTodoItem] = useState<Todo>({
@@ -77,47 +70,24 @@ function TodoForm() {
 
   return (
     <TodoLayout>
-        <TodoHeader>
-            <LeftOutlined onClick={DayMinus}/>
-            <div>{`${dayOfWeek} , ${todayYear}-${todayMonth}-${todayDate}`}</div>
-            <RightOutlined onClick={DayPlus}/>
-        </TodoHeader>
+        <TodoHeaders
+         todayYear={todayYear}
+         dayOfWeek={dayOfWeek}
+         todayMonth={todayMonth}
+         todayDate={todayDate}
+         DayMinus={DayMinus}
+         DayPlus={DayPlus}
+        />
 
-        <TodoBody todolist_len={todolist.length}>
+        <TodoBody
+            todolist={todolist}
+        />
 
-            { todolist.length === 0 ?
-            <div>
-                <p>투두리스트가 없어요.</p>
-                <p>오른쪽 하단에서 추가버튼을 눌러주세요 <SmileOutlined /></p>
-            </div>
-            :
-            todolist.map((item,idx)=>{
-                return(
-                    <TodoItem 
-                    key={idx}
-                    title={item.title} 
-                    created_at={item.created_at}
-                    isDone={item.isDone}
-                    id={item.id}
-                    />
-                )
-            })
-            }
-        </TodoBody>
-
-        <TodoFooter >
-            <div className='task'>
-                <p>{`${todolist.length} Task`}</p>
-                <p className='success'>{`sucess ${todolist.filter((e)=>e.isDone === true).length} Task`}</p>
-            </div>
-
-            <div>
-            <span>Add New</span>
-            <PlusCircleOutlined onClick={()=>{setIsModalOpen(!isModalOpen)}}/>
-            </div>
-        </TodoFooter>
-
-
+        <TodoFooter
+            todolist={todolist}
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+        />
 
         <Modal 
         onCancel={()=>{setIsModalOpen(false); clearTodoItem();}} 
